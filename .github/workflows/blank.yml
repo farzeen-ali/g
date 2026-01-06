@@ -1,0 +1,24 @@
+name: Test GCP Connection
+on:
+  push:
+    branches: [ main ] # Jab aap commit karenge, ye chalega
+
+jobs:
+  test-connection:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write' # Yeh sabse zaroori line hai OIDC ke liye
+
+    steps:
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v2'
+      with:
+        workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+        service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+
+    - name: 'Verify Connection'
+      run: |
+        gcloud auth list
+        echo "Connection Successful! GCP can now see GitHub."
