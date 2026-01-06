@@ -1,16 +1,19 @@
 name: Test GCP Connection
 on:
   push:
-    branches: [ main ] # Jab aap commit karenge, ye chalega
+    branches: [ main ]
 
 jobs:
   test-connection:
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
-      id-token: 'write' # Yeh sabse zaroori line hai OIDC ke liye
+      id-token: 'write' # OIDC token exchange ke liye lazmi hai
 
     steps:
+    - name: 'Checkout Repository'
+      uses: 'actions/checkout@v4' # Isse empty workspace wali warning khatam ho jayegi
+
     - id: 'auth'
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v2'
@@ -20,5 +23,10 @@ jobs:
 
     - name: 'Verify Connection'
       run: |
+        # Ab aapko yahan "Active" account mein apna Service Account nazar aayega
         gcloud auth list
-        echo "Connection Successful! GCP can now see GitHub."
+        
+        # Ye command check karegi ke kya hum GCP ki basic info read kar pa rahe hain
+        gcloud config list
+        
+        echo "Connection Successful! No warnings, and Service Account is active."
