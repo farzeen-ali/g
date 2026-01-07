@@ -13,7 +13,7 @@ jobs:
     steps:
     - name: 'Checkout Repository'
       uses: 'actions/checkout@v4' # Isse empty workspace wali warning khatam ho jayegi
-
+      
     - id: 'auth'
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v2'
@@ -30,3 +30,4 @@ jobs:
         gcloud config list
         
         echo "Connection Successful! No warnings, and Service Account is active."
+      
