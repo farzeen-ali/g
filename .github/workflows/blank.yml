@@ -30,4 +30,3 @@ jobs:
         gcloud config list
         
         echo "Connection Successful! No warnings, and Service Account is active."
-      
